@@ -1,10 +1,10 @@
 package za.ac.cput.factory;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Order;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 
     public class OrderFactoryTest {
@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
             Order order = OrderFactory.create("ORD-999");
 
             assertNotNull(order);
-            assertEquals("ORD-999", order.getOrderId());
+            Assertions.assertEquals("ORD-999", order.getOrderId());
             assertEquals(0.0, order.getTotalAmount());
         }
 
-        private void assertEquals(String s, String orderId) {
+        private void assertEquals(double s, double orderId) {
             
         }
 

@@ -10,24 +10,26 @@ import za.ac.cput.util.Helper;
  * Date: 28 June 2026
  */
 
+
 public class OrderItemFactory {
 
-        public static OrderItem create(String itemId, int quantity, double unitPrice) {
-            if (Helper.isNullOrEmpty(itemId)) {
-                throw new IllegalArgumentException("Item ID can not  be empty or null");
-            }
-            if (quantity < 0) {
-                throw new IllegalArgumentException("Quantity cannot be negative or empty");
-            }
-            if (unitPrice < 0) {
-                throw new IllegalArgumentException("Price cannot be negative or empty");
-            }
+    public static OrderItem create(String itemId, int quantity, double unitPrice) {
 
-            return new OrderItem.Builder()
-                    .itemId(itemId)
-                    .quantity(quantity)
-                    .unitPrice(unitPrice)
-                    .build();
+        if (Helper.isNullOrEmpty(itemId)) {
+            throw new IllegalArgumentException("Item ID cannot be empty");
         }
-    }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+        if (unitPrice < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
 
+
+        return new OrderItem.Builder()
+                .itemId(itemId)
+                .quantity(quantity)
+                .unitPrice(unitPrice)
+                .build();
+    }
+}

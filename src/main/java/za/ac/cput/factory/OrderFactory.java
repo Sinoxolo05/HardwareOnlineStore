@@ -21,7 +21,7 @@ public class OrderFactory {
 
             return new Order.Builder()
                     .orderId(orderId)
-                    .status("PENDING")
+                    .status()
                     .build();
         }
     }
