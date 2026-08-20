@@ -1,0 +1,97 @@
+<html>
+<head>
+<title>CartItemRepository.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+CartItemRepository.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">za</span><span class="s2">.</span><span class="s1">ac</span><span class="s2">.</span><span class="s1">cput</span><span class="s2">.</span><span class="s1">repository</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">za</span><span class="s2">.</span><span class="s1">ac</span><span class="s2">.</span><span class="s1">cput</span><span class="s2">.</span><span class="s1">domain</span><span class="s2">.</span><span class="s1">CartItem</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s3">/* 
+ * CartItemRepository.java 
+ * CartItem Repository using the Singleton Pattern 
+ * Author: Mfanafuthi Khumalo 230018270 
+ * Date: 12 July 2026 
+ */</span>
+
+<span class="s0">public class </span><span class="s1">CartItemRepository </span><span class="s2">{</span>
+
+    <span class="s0">private static </span><span class="s1">CartItemRepository repository </span><span class="s2">= </span><span class="s0">null</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">CartItem</span><span class="s2">&gt; </span><span class="s1">cartItemList</span><span class="s2">;</span>
+
+    <span class="s3">// Private constructor</span>
+    <span class="s0">private </span><span class="s1">CartItemRepository</span><span class="s2">() {</span>
+        <span class="s1">cartItemList </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Singleton access method</span>
+    <span class="s0">public static </span><span class="s1">CartItemRepository getRepository</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">repository </span><span class="s2">== </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">repository </span><span class="s2">= </span><span class="s0">new </span><span class="s1">CartItemRepository</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s0">return </span><span class="s1">repository</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Create</span>
+    <span class="s0">public </span><span class="s1">CartItem create</span><span class="s2">(</span><span class="s1">CartItem cartItem</span><span class="s2">) {</span>
+        <span class="s1">cartItemList</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">cartItem</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s1">cartItem</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Read</span>
+    <span class="s0">public </span><span class="s1">CartItem read</span><span class="s2">(</span><span class="s1">String cartItemId</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">CartItem cartItem </span><span class="s2">: </span><span class="s1">cartItemList</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">cartItem</span><span class="s2">.</span><span class="s1">getCartItemId</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">cartItemId</span><span class="s2">)) {</span>
+                <span class="s0">return </span><span class="s1">cartItem</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s0">return null</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Update</span>
+    <span class="s0">public </span><span class="s1">CartItem update</span><span class="s2">(</span><span class="s1">CartItem updatedCartItem</span><span class="s2">) {</span>
+        <span class="s1">CartItem existing </span><span class="s2">= </span><span class="s1">read</span><span class="s2">(</span><span class="s1">updatedCartItem</span><span class="s2">.</span><span class="s1">getCartItemId</span><span class="s2">());</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">existing </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">cartItemList</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">existing</span><span class="s2">);</span>
+            <span class="s1">cartItemList</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">updatedCartItem</span><span class="s2">);</span>
+            <span class="s0">return </span><span class="s1">updatedCartItem</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">return null</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Delete</span>
+    <span class="s0">public boolean </span><span class="s1">delete</span><span class="s2">(</span><span class="s1">String cartItemId</span><span class="s2">) {</span>
+        <span class="s1">CartItem cartItem </span><span class="s2">= </span><span class="s1">read</span><span class="s2">(</span><span class="s1">cartItemId</span><span class="s2">);</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">cartItem </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">cartItemList</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">cartItem</span><span class="s2">);</span>
+            <span class="s0">return true</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">return false</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Get All</span>
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">CartItem</span><span class="s2">&gt; </span><span class="s1">getAll</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">cartItemList</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>

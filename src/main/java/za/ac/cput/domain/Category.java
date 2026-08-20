@@ -7,12 +7,27 @@ package za.ac.cput.domain;
  * Date: 21 June 2026
  */
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "category")
 public class Category {
 
-    private final String categoryId;
-    private final String name;
-    private final String parentId;
+    @Id
+    @Column(name = "category_id")
+    private String categoryId;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "parent_id")
+    private String parentId;
+
+    // Required by JPA
+    protected Category() {
+    }
+
+    // Builder constructor
     private Category(Builder builder) {
         this.categoryId = builder.categoryId;
         this.name = builder.name;
