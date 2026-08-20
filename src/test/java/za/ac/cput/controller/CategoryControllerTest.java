@@ -1,6 +1,8 @@
 package za.ac.cput.controller;
 
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import za.ac.cput.domain.Category;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,10 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
  Date: 19/07/2026
 */
 
+@SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CategoryControllerTest {
 
-    private static final CategoryController controller = new CategoryController();
+    @Autowired
+    private CategoryController controller;
 
     private static final Category category = new Category.Builder()
             .setCategoryId("C001")
@@ -27,14 +31,18 @@ public class CategoryControllerTest {
     @Order(1)
     void create() {
         Category created = controller.create(category);
+
         assertNotNull(created);
+        assertEquals("C001", created.getCategoryId());
     }
 
     @Test
     @Order(2)
     void read() {
         Category read = controller.read(category.getCategoryId());
+
         assertNotNull(read);
+        assertEquals("C001", read.getCategoryId());
     }
 
     @Test
@@ -46,8 +54,10 @@ public class CategoryControllerTest {
                 .setName("Home Electronics")
                 .build();
 
-        assertEquals("Home Electronics",
-                controller.update(updated).getName());
+        Category result = controller.update(updated);
+
+        assertNotNull(result);
+        assertEquals("Home Electronics", result.getName());
     }
 
     @Test

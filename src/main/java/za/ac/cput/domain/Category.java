@@ -1,5 +1,8 @@
 
 package za.ac.cput.domain;
+import jakarta.persistence.*;
+
+import java.util.Objects;
 /*
  * Category.java
  * Category Domain Entity using Builder Pattern
@@ -7,28 +10,23 @@ package za.ac.cput.domain;
  * Date: 21 June 2026
  */
 
-import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "category")
 public class Category {
 
     @Id
-    @Column(name = "category_id")
     private String categoryId;
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "parent_id")
     private String parentId;
 
-    // Required by JPA
-    protected Category() {
+    public Category() {
+
     }
 
-    // Builder constructor
-    private Category(Builder builder) {
+    public Category(Builder builder) {
         this.categoryId = builder.categoryId;
         this.name = builder.name;
         this.parentId = builder.parentId;
@@ -49,7 +47,7 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "categoryId='" + categoryId + '\'' +
+                "id='" + categoryId + '\'' +
                 ", name='" + name + '\'' +
                 ", parentId='" + parentId + '\'' +
                 '}';
@@ -84,6 +82,10 @@ public class Category {
         }
 
         public Category build() {
+            Objects.requireNonNull(
+                    categoryId,
+                    "Category identity required"
+            );
             return new Category(this);
         }
     }

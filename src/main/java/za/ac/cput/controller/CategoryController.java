@@ -10,33 +10,42 @@ import java.util.List;
    Author: Sinoxolo Kobeni (230801846)
    Date: 19/07/2026
 */
+import org.springframework.web.bind.annotation.*;
+import za.ac.cput.service.ICategoryService;
+
+import java.util.List;
+
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
 
-    private final CategoryService service = CategoryService.getService();
+    private final ICategoryService service;
 
-    @PostMapping("/create")
+    public CategoryController(ICategoryService service) {
+        this.service = service;
+    }
+
+    @PostMapping
     public Category create(@RequestBody Category category) {
         return service.create(category);
     }
 
-    @GetMapping("/read/{categoryId}")
+    @GetMapping("/{categoryId}")
     public Category read(@PathVariable String categoryId) {
         return service.read(categoryId);
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public Category update(@RequestBody Category category) {
         return service.update(category);
     }
 
-    @DeleteMapping("/delete/{categoryId}")
+    @DeleteMapping("/{categoryId}")
     public boolean delete(@PathVariable String categoryId) {
         return service.delete(categoryId);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public List<Category> getAll() {
         return service.getAll();
     }

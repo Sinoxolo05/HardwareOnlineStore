@@ -1,27 +1,40 @@
 
 package za.ac.cput.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.math.BigDecimal;
+import java.util.Objects;
+
 /*
  * Product.java
  * Product Domain Entity using Builder Pattern
  * Author: Sinoxolo Kobeni (230801846)
  * Date: 21 June 2026
  */
-
+@Entity
+@Table(name = "product")
 public class Product {
 
-    private final String productId;
-    private final String categoryId;
-    private final String name;
-    private final String sku;
-    private final String description;
-    private final BigDecimal price;
-    private final double weight;
-    private final String dimensions;
-    private final String imageUrl;
+    @Id
+    private String productId;
 
-    private Product(Builder builder) {
+    private String categoryId;
+    private String name;
+    private String sku;
+    private String description;
+    private BigDecimal price;
+    private double weight;
+    private String dimensions;
+    private String imageUrl;
+
+    public Product() {
+
+    }
+
+    public Product(Builder builder) {
         this.productId = builder.productId;
         this.categoryId = builder.categoryId;
         this.name = builder.name;
@@ -155,6 +168,7 @@ public class Product {
         }
 
         public Product build() {
+            Objects.requireNonNull(productId, "Product identity required");
             return new Product(this);
         }
     }

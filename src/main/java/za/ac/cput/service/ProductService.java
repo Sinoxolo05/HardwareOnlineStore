@@ -1,7 +1,6 @@
 package za.ac.cput.service;
 
 import za.ac.cput.domain.Product;
-import za.ac.cput.repository.ProductRepository;
 
 import java.util.List;
 /* ProductService.java
@@ -9,44 +8,46 @@ import java.util.List;
    Author: Sinoxolo Kobeni (230801846)
    Date: 12 July 2026 */
 
+import org.springframework.stereotype.Service;
+import za.ac.cput.repository.IProductRepository;
+
+import java.util.List;
+
+@Service
 public class ProductService implements IProductService {
 
-    private static ProductService service = null;
-    private final ProductRepository repository;
+    private final IProductRepository repository;
 
-    private ProductService() {
-        repository = ProductRepository.getRepository();
-    }
-
-    public static ProductService getService() {
-        if (service == null) {
-            service = new ProductService();
-        }
-        return service;
+    public ProductService(IProductRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public Product create(Product product) {
-        return repository.create(product);
+        return repository.save(product);
     }
 
     @Override
     public Product read(String productId) {
-        return repository.read(productId);
+        return repository.findById(productId).orElse(null);
     }
 
     @Override
     public Product update(Product product) {
-        return repository.update(product);
+        return repository.save(product);
     }
 
     @Override
     public boolean delete(String productId) {
-        return repository.delete(productId);
+        if (repository.existsById(productId)) {
+            repository.deleteById(productId);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public List<Product> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
 }

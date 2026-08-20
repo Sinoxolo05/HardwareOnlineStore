@@ -1,53 +1,54 @@
 package za.ac.cput.service;
 
 import za.ac.cput.domain.Category;
-import za.ac.cput.repository.CategoryRepository;
+import za.ac.cput.repository.AddressRepository;
 
 import java.util.List;
-import java.util.Set;
 /* CategoryService.java
    Category Service Implementation using Singleton Pattern
    Author: Sinoxolo Kobeni (230801846)
    Date: 12 July 2026 */
 
+import org.springframework.stereotype.Service;
+import za.ac.cput.repository.ICategoryRepository;
+
+import java.util.List;
+
+@Service
 public class CategoryService implements ICategoryService {
 
-    private static CategoryService service = null;
-    private final CategoryRepository repository;
+    private final ICategoryRepository repository;
 
-    private CategoryService() {
-        repository = CategoryRepository.getRepository();
-    }
-
-    public static CategoryService getService() {
-        if (service == null) {
-            service = new CategoryService();
-        }
-        return service;
+    public CategoryService(ICategoryRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public Category create(Category category) {
-        return repository.create(category);
+        return repository.save(category);
     }
 
     @Override
     public Category read(String categoryId) {
-        return repository.read(categoryId);
+        return repository.findById(categoryId).orElse(null);
     }
 
     @Override
     public Category update(Category category) {
-        return repository.update(category);
+        return repository.save(category);
     }
 
     @Override
     public boolean delete(String categoryId) {
-        return repository.delete(categoryId);
+        if (repository.existsById(categoryId)) {
+            repository.deleteById(categoryId);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public List<Category> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
 }

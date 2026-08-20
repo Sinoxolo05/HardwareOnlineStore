@@ -8,9 +8,9 @@ import java.util.Set;
    Author: Sinoxolo Kobeni (230801846)
    Date: 05 July 2026 */
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface IProductRepository extends IRepository<Product, String> {
-
-    Set<Product> getAll();
-
+@Repository
+public interface IProductRepository extends JpaRepository<Product, String> {
 }
